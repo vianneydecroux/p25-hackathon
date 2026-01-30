@@ -65,8 +65,11 @@ VY = np.random.uniform(0,speed_max,N)
 
 
 fig, ax = plt.subplots()
-ax.set(xlim=[-100,100],ylim=[-100,100])
-scat = ax.scatter(position[:,0],position[:,1],s=masse/1000)
+ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
+pos=[]
+for goo in Liste_goos:
+    pos.append([goo.position[0],goo.position[1]])
+scat = ax.scatter(pos[:,0],pos[:,1],s=1)
 
 
 def tdt(t):
@@ -84,6 +87,7 @@ def tdt(t):
     return scat
 ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
 plt.show()
+
 """Initialisation des plateformes"""
 for i in range (20):
     Liste_goos.append(goo(x_min + i*0.1,0,True))
