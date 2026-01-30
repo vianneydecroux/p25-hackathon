@@ -10,7 +10,7 @@ y_max = 50
 
 g=9.81/20
 k=100
-dt=10*-6
+dt=1
 Liste_goos = []  #vecteur de goos
 
 class goo:
@@ -34,14 +34,15 @@ class goo:
             if self.liens=={}: Liste_goos.pop()
     
     def update_forces(self):
+        eps=0.1
         g=9.81/20
-        self.forcces=np.array([0,-self.mass*g])
+        self.forces=np.array([0,-self.mass*g])
         for b in self.liens.keys():
             d_x=self.position[0]-b.position[0]
             d_y=self.position[1]-b.position[1]
             d=np.sqrt(d_x**2+d_y**2)
-            self.forces[0]+=-k*(d-self.liens[b])*d_x/d
-            self.forces[1]+=-k*(d-self.liens[b])*d_y/d
+            self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+eps)
+            self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+eps)
 
 
 def tdt(t):
@@ -49,8 +50,8 @@ def tdt(t):
     global Liste_goos 
     for goo in Liste_goos :
         if goo.plateforme!=True:
-            goo.vitesse[0] = goo.vitesse[0] + dt*goo.forces[0]
-            goo.vitesse[1] = goo.vitesse[1] + dt*goo.forces[1]
+            goo.vitesse[0] = goo.vitesse[0] + dt*goo.forces[0]/goo.mass
+            goo.vitesse[1] = goo.vitesse[1] + dt*goo.forces[1]/goo.mass
             goo.position[0] = goo.position[0] +dt*goo.vitesse[0]
             goo.position[1] = goo.position[1] +dt*goo.vitesse[1]
             goo.update_forces()
