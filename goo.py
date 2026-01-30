@@ -28,3 +28,5 @@ def forces(goo a,goo b):
         a.force[0]=-k(dx-a.liens[b])
         a.force[1]=-k(dy-a.liens[b])-a.mass*g
 
+pl1 = np.array([x_min,1,x_min+3,-1])
+pl2 = np.array([x_max-2,3,x_max,-1])
