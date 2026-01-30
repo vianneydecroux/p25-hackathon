@@ -67,7 +67,13 @@ def tdt(t):
         pos.append([go.position[0],go.position[1]])
     pos= np.array(pos)
     scat.set_offsets(pos)
-    return scat,
+    for line, go, go2 in lines:
+        line.set_data(
+            [go.position[0], go2.position[0]],
+            [go.position[1], go2.position[1]]
+        )
+
+    return scat, *[l[0] for l in lines]
 
 
 
@@ -89,11 +95,16 @@ pos_y=[]
 for go in liste_goos:
     pos_x.append(go.position[0])
     pos_y.append(go.position[1])
+
 scat = ax.scatter(pos_x,pos_y,s=30)
+lines = []
+for go in liste_goos :
+    for go2 in go.liens.keys():
+        line, = ax.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
+        lines.append((line, go, go2))
+
 ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=1)
 
 
 plt.connect('button_press_event', on_click)
 plt.show()
-
-
