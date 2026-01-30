@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt 
 import matplotlib.animation as animation
 
-x_min = -10
-x_max = 10
-y_min = -10
-y_max = 10
+x_min = -50
+x_max = 50
+y_min = -50
+y_max = 50
 N = 3
 speed_max = 1
 g=9.81/20
