@@ -92,5 +92,5 @@ plt.show()
 for i in range (20):
     Liste_goos.append(goo(x_min + i*0.1,0,True))
     Liste_goos.append(goo(x_max - i*0.1,0,True))
-Liste_goos.append(goo(X[0],Y[0],False))
-Liste_goos.append(goo(X[1],Y[1],False))
+Liste_goos.append(goo(x_min + 25,0,False))
+Liste_goos.append(goo(x_min + 40,0,False))
