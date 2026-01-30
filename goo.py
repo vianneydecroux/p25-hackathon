@@ -38,7 +38,7 @@ class goo:
             self.force[0]+=-k(d-self.liens[b])*d_x/d
             self.force[1]+=-k(d-self.liens[b])*d_y/d
 
-        if not(pl):
+        if not(self.plateforme):
             for g in Liste_goos:
                 l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
                 if l==0: Liste_goos.pop(self)
