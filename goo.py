@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.backend_bases import MouseButton
 
-éta=0.1
+éta=1
 x_min = -0.50
 x_max = 0.50
 y_min = -0.50
@@ -87,15 +87,9 @@ def tdt(t):
 
 
 """Initialisation des plateformes"""
-for i in range (21):
-    liste_goos.append(Goo(x_min + i*0.01,0,True))
-    liste_goos.append(Goo(x_max - i*0.01,0,True))
-liste_goos.append(Goo(x_min + 0.3,0,False))
-if liste_goos[-1].Prob:
-    liste_goos.pop()
-liste_goos.append(Goo(x_min + 0.40,0,False))
-if liste_goos[-1].Prob:
-    liste_goos.pop()
+for i in range (100):
+    liste_goos.append(Goo(x_min + i*0.001,0,True))
+    liste_goos.append(Goo(x_max - i*0.001,0,True))
 
 fig, ax = plt.subplots()
 ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
