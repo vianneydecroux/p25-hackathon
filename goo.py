@@ -8,6 +8,8 @@ y_max = 10
 N = 3
 speed_max = 1
 
+L = []
+
 class goo:
     def __init__(self, x, y):
         self.position = np.array([x,y])
@@ -15,6 +17,9 @@ class goo:
         self.rayon = 0.01
         self.vitesse = np.array([0,0])
         self.force = np.array([0,0]) #liste force x et force y
+        for g in L:
+            
+        
         self.liens = {}  #entrée liens sortie l0
     
 
@@ -29,7 +34,10 @@ positions = np.concatenate((X,Y)).reshape(2,N)
 speeds = np.concatenate((VX,VY)).reshape(2,N)
 
 a = goo(X[0],Y[0])
+L.append(a)
+L.append(b)
 b = goo(X[1],Y[1])
+
 
 def forces(a , b):
     if b in a.liens.key:
