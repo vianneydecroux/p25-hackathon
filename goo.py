@@ -55,4 +55,3 @@ L.append(goo(x_max,0,True))
 L.append(goo(X[0],Y[0],False))
 L.append(goo(X[1],Y[1],False))
 
-
