@@ -37,3 +37,5 @@ class goo:
     
     def ajouter_force
 
+pl1 = np.array([x_min,1,x_min+3,-1])
+pl2 = np.array([x_max-2,3,x_max,-1])
