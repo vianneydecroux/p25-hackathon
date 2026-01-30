@@ -17,10 +17,13 @@ class goo:
         self.rayon = 0.01
         self.vitesse = np.array([0,0])
         self.force = np.array([0,0]) #liste force x et force y
-        for g in L:
-            
-        
         self.liens = {}  #entrée liens sortie l0
+        for g in L:
+            l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
+            if  l <= 20:
+                self.liens[g] = l
+        
+
     
 
 """Pour travailler directement sur les forces"""
