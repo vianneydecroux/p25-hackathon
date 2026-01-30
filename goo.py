@@ -10,7 +10,7 @@ y_max = 50
 
 g=9.81/20
 k=100
-dt=1
+dt=10*-6
 Liste_goos = []  #vecteur de goos
 
 class goo:
@@ -31,12 +31,12 @@ class goo:
                 self.liens[g] = l
     
     def update_forces(self):
-        for b in self.liens.keys:
-            d=np.sqrt(d_x**2+d_y**2)
+        for b in self.liens.keys():
             d_x=self.position[0]-b.position[0]
             d_y=self.position[1]-b.position[1]
-            self.force[0]+=-k(d-self.liens[b])*d_x/d
-            self.force[1]+=-k(d-self.liens[b])*d_y/d
+            d=np.sqrt(d_x**2+d_y**2)
+            self.forces[0]+=-k(d-self.liens[b])*d_x/d
+            self.forces[1]+=-k(d-self.liens[b])*d_y/d
 
         if not(self.plateforme):
             for g in Liste_goos:
@@ -49,8 +49,7 @@ class goo:
             if self.liens=={}: Liste_goos.pop(self)
 
 def tdt(t):
-    pos_x=[]
-    pos_y=[]
+    pos=[]
     global Liste_goos 
     for goo in Liste_goos :
         if goo.plateforme!=True:
@@ -59,18 +58,18 @@ def tdt(t):
             goo.position[0] = goo.position[0] +dt*goo.vitesse[0]
             goo.position[1] = goo.position[1] +dt*goo.vitesse[1]
             goo.update_forces()
-            pos_x.append(goo.position[0])
-            pos_y.append(goo.position[1])
-    scat.set_offsets(np.transpose([pos_x,pos_y]))
+            pos.append([goo.position[0],goo.position[1]])
+    pos=np.array(pos)
+    scat.set_offsets(pos)
     return scat
-
+ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
 
 """Initialisation des plateformes"""
-for i in range (0,20,1):
-    Liste_goos.append(goo(x_min + i,0,True))
-    Liste_goos.append(goo(x_max - i,0,True))
+for i in range (20):
+    Liste_goos.append(goo(x_min + i*0.1,0,True))
+    Liste_goos.append(goo(x_max - i*0.1,0,True))
 Liste_goos.append(goo(x_min + 25,0,False))
-Liste_goos.append(goo(x_min + 30,0,False))
+Liste_goos.append(goo(x_min + 40,0,False))
 
 fig, ax = plt.subplots()
 ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
