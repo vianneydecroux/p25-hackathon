@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
+import matplotlib.animation as animation
 
 x_min = -10
 x_max = 10
@@ -8,7 +10,7 @@ y_max = 10
 N = 3
 speed_max = 1
 g=9.81/20
-L = []
+L = []  #vecteur de goos
 
 class goo:
     def __init__(self, x, y, pl):
