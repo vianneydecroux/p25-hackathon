@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 from matplotlib.backend_bases import MouseButton
 
 #Constantes
-éta=1
+éta=2
 x_min = -0.50
 x_max = 0.50
 y_min = -0.50
@@ -65,6 +65,7 @@ class Goo:
             b.liens.pop(self, None)
 
 def on_click(event):                                                #Les clics pour faire apparaitre un nouveau goos
+    global g
     if event.button is MouseButton.LEFT:
         print(1)
         x,y=(event.xdata,event.ydata)
@@ -76,6 +77,8 @@ def on_click(event):                                                #Les clics p
             for go2 in go.liens.keys():
                 line, = ax.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
                 lines[(go,go2)] = line
+    if event.button is MouseButton.RIGHT:
+        g = 1.1 * g
         
 
 
@@ -120,7 +123,7 @@ for go in liste_goos :
         line, = ax.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
         lines[(go,go2)] = line
 
-ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=1)
+ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 1, interval=1)
 
 
 plt.connect('button_press_event', on_click)
