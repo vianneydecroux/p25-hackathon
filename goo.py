@@ -62,10 +62,13 @@ def tdt(t):
         pos.append([go.position[0],go.position[1]])
     pos= np.array(pos)
     scat.set_offsets(pos)
-    for go in Liste_goos :
-        for go2 in go.liens.keys():
-            plt.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
-    return scat,
+    for line, go, go2 in lines:
+        line.set_data(
+            [go.position[0], go2.position[0]],
+            [go.position[1], go2.position[1]]
+        )
+
+    return scat, *[l[0] for l in lines]
 
 """Initialisation des plateformes"""
 for i in range (21):
@@ -87,9 +90,11 @@ for go in Liste_goos:
     pos_y.append(go.position[1])
 
 scat = ax.scatter(pos_x,pos_y,s=30)
+lines = []
 for go in Liste_goos :
     for go2 in go.liens.keys():
-        plt.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
+        line, = ax.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
+        lines.append((line, go, go2))
 
 ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=1)
 plt.show()
