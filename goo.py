@@ -34,7 +34,7 @@ class goo:
                 if  l <= 0.20 and not(go.plateforme):
                     self.liens[go] = l
                     go.liens[self] = l
-                if  l <= 0.10 and go.plateforme:
+                if  l<= 0.10 and go.plateforme:
                     self.liens[go] = l
             #if self.liens=={}: Liste_goos.pop()
     
@@ -46,15 +46,6 @@ class goo:
             d=np.sqrt(d_x**2+d_y**2)
             self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+0.01)
             self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+0.01)
-
-fig, ax = plt.subplots()
-ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
-pos_x=[]
-pos_y=[]
-for goo in Liste_goos:
-    pos_x.append(goo.position[0])
-    pos_y.append(goo.position[1])
-scat = ax.scatter(pos_x,pos_y,s=30)
 
 def tdt(t):
     pos=[]
@@ -82,9 +73,9 @@ fig, ax = plt.subplots()
 ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
 pos_x=[]
 pos_y=[]
-for goo in Liste_goos:
-    pos_x.append(goo.position[0])
-    pos_y.append(goo.position[1])
+for go in Liste_goos:
+    pos_x.append(go.position[0])
+    pos_y.append(go.position[1])
 scat = ax.scatter(pos_x,pos_y,s=30)
 ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=1)
 plt.show()
