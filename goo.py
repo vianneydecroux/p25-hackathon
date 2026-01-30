@@ -23,12 +23,12 @@ class goo:
         self.vitesse = np.array([0,0])
         self.forces = np.array([0,-self.mass*g]) #liste force x et force y
         self.liens = {}  #entrée liens sortie l0
-        for g in Liste_goos:
-            l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
-            if  l <= 20 and not(g.plateforme):
-                self.liens[g] = l
-            if  l <= 10 and g.plateforme:
-                self.liens[g] = l
+        for go in Liste_goos:
+            l = np.sqrt( (self.position[0]-go.position[0])**2 + (self.position[1]-go.position[1])**2 )
+            if  l <= 20 and not(go.plateforme):
+                self.liens[go] = l
+            if  l <= 10 and go.plateforme:
+                self.liens[go] = l
     
     def update_forces(self):
         g=9.81/20
@@ -41,14 +41,14 @@ class goo:
             self.forces[1]+=-k*(d-self.liens[b])*d_y/d
 
         if not(self.plateforme):
-            for go in Liste_goos:
-                l = np.sqrt( (self.position[0]-go.position[0])**2 + (self.position[1]-g.position[1])**2 )
-                if l==0: Liste_goos.pop(self)
+            for g in Liste_goos:
+                l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
+                if l==0: Liste_goos.pop()
                 if  l <= 20 and not(g.plateforme):
                     self.liens[g] = l
                 if  l <= 10 and g.plateforme:
                     self.liens[g] = l
-            if self.liens=={}: Liste_goos.pop(self)
+            if self.liens=={}: Liste_goos.pop()
 
 def tdt(t):
     pos=[]
