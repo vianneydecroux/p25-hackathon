@@ -1,7 +1,13 @@
+# +
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt 
 import matplotlib.animation as animation
+
+# %matplotlib ipympl
+
+# -
 
 x_min = -50
 x_max = 50
@@ -56,8 +62,8 @@ def tdt(t):
             goo.position[0] = goo.position[0] +dt*goo.vitesse[0]
             goo.position[1] = goo.position[1] +dt*goo.vitesse[1]
             goo.update_forces()
-            pos.append([goo.position[0],goo.position[1]])
-    pos= np.transpose(np.array(pos))
+        pos.append([goo.position[0],goo.position[1]])
+    pos= np.array(pos)
     scat.set_offsets(pos)
     return scat
 
