@@ -35,18 +35,18 @@ class goo:
             d_x=self.position[0]-b.position[0]
             d_y=self.position[1]-b.position[1]
             d=np.sqrt(d_x**2+d_y**2)
-            self.forces[0]+=-k(d-self.liens[b])*d_x/d
-            self.forces[1]+=-k(d-self.liens[b])*d_y/d
+            self.forces[0]+=-k*(d-self.liens[b])*d_x/d
+            self.forces[1]+=-k*(d-self.liens[b])*d_y/d
 
         if not(self.plateforme):
             for g in Liste_goos:
                 l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
-                if l==0: Liste_goos.pop(self)
+                if l==0: Liste_goos.pop()
                 if  l <= 20 and not(g.plateforme):
                     self.liens[g] = l
                 if  l <= 10 and g.plateforme:
                     self.liens[g] = l
-            if self.liens=={}: Liste_goos.pop(self)
+            if self.liens=={}: Liste_goos.pop()
 
 def tdt(t):
     pos=[]
