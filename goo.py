@@ -65,8 +65,8 @@ def tdt(t):
 
 """Initialisation des plateformes"""
 for i in range (20):
-    Liste_goos.append(goo(x_min + i*0.1,0,True))
-    Liste_goos.append(goo(x_max - i*0.1,0,True))
+    Liste_goos.append(goo(x_min + i,0,True))
+    Liste_goos.append(goo(x_max - i,0,True))
 Liste_goos.append(goo(x_min + 25,0,False))
 Liste_goos.append(goo(x_min + 40,0,False))
 
