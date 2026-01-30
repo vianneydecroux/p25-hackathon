@@ -16,7 +16,7 @@ y_max = 50
 
 g=9.81/20
 k=100
-dt=1
+dt=3
 Liste_goos = []  #vecteur de goos
 
 class goo:
@@ -50,6 +50,14 @@ class goo:
             self.forces[0]+=-k*(d-self.liens[b])*d_x/d
             self.forces[1]+=-k*(d-self.liens[b])*d_y/d
 
+fig, ax = plt.subplots()
+ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
+pos_x=[]
+pos_y=[]
+for goo in Liste_goos:
+    pos_x.append(goo.position[0])
+    pos_y.append(goo.position[1])
+scat = ax.scatter(pos_x,pos_y,s=30)
 
 def tdt(t):
     pos=[]
@@ -62,6 +70,7 @@ def tdt(t):
             goo.position[1] = goo.position[1] +dt*goo.vitesse[1]
             goo.update_forces()
         pos.append([goo.position[0],goo.position[1]])
+        print(pos)
     pos= np.array(pos)
     scat.set_offsets(pos)
     return scat
@@ -73,13 +82,5 @@ for i in range (20):
 Liste_goos.append(goo(x_min + 25,0,False))
 Liste_goos.append(goo(x_min + 40,0,False))
 
-fig, ax = plt.subplots()
-ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
-pos_x=[]
-pos_y=[]
-for goo in Liste_goos:
-    pos_x.append(goo.position[0])
-    pos_y.append(goo.position[1])
-scat = ax.scatter(pos_x,pos_y,s=30)
 ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
 plt.show()
