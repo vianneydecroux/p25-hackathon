@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.backend_bases import MouseButton
 
-éta=0.1
+éta=10
 x_min = -0.50
 x_max = 0.50
 y_min = -0.50
