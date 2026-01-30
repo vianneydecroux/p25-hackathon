@@ -23,12 +23,16 @@ class goo:
         self.vitesse = np.array([0,0])
         self.forces = np.array([0,-self.mass*g]) #liste force x et force y
         self.liens = {}  #entrée liens sortie l0
-        for go in Liste_goos:
-            l = np.sqrt( (self.position[0]-go.position[0])**2 + (self.position[1]-go.position[1])**2 )
-            if  l <= 0.2 and not(go.plateforme):
-                self.liens[go] = l
-            if  l <= 0.1 and go.plateforme:
-                self.liens[go] = l
+        if not(self.plateforme):
+            for g in Liste_goos:
+                l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
+                if l==0: Liste_goos.pop()
+                if  l <= 20 and not(g.plateforme):
+                    self.liens[g] = l
+                    g.liens[self] = l
+                if  l <= 10 and g.plateforme:
+                    self.liens[g] = l
+            if self.liens=={}: Liste_goos.pop()
     
     def update_forces(self):
         eps=0.1
@@ -53,8 +57,8 @@ def tdt(t):
             goo.position[1] = goo.position[1] +dt*goo.vitesse[1]
             goo.update_forces()
             pos.append([goo.position[0],goo.position[1]])
-    pos=np.array(pos)
-    scat.set_offsets(np.transpose(pos))
+    pos= np.transpose(np.array(pos))
+    scat.set_offsets(pos)
     return scat
 
 """Initialisation des plateformes"""
