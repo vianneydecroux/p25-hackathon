@@ -51,6 +51,7 @@ class goo:
 def tdt(t):
     pos=[]
     global Liste_goos 
+
     for go in Liste_goos :
         if go.plateforme!=True:
             go.vitesse[0] = go.vitesse[0] + dt*go.forces[0]/go.mass
@@ -61,6 +62,9 @@ def tdt(t):
         pos.append([go.position[0],go.position[1]])
     pos= np.array(pos)
     scat.set_offsets(pos)
+    for go in Liste_goos :
+        for go2 in go.liens.keys():
+            plt.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
     return scat,
 
 """Initialisation des plateformes"""
@@ -81,6 +85,11 @@ pos_y=[]
 for go in Liste_goos:
     pos_x.append(go.position[0])
     pos_y.append(go.position[1])
+
 scat = ax.scatter(pos_x,pos_y,s=30)
+for go in Liste_goos :
+    for go2 in go.liens.keys():
+        plt.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
+
 ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=1)
 plt.show()
