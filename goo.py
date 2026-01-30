@@ -2,21 +2,20 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.pyplot as plt 
 import matplotlib.animation as animation
 
 # %matplotlib ipympl
 
 # -
 
-x_min = -50
-x_max = 50
-y_min = -50
-y_max = 50
+x_min = -0.50
+x_max = 0.50
+y_min = -0.50
+y_max = 0.50
 
 g=9.81/20
 k=100
-dt=1
+dt=0.1
 Liste_goos = []  #vecteur de goos
 
 class goo:
@@ -30,48 +29,47 @@ class goo:
         self.forces = np.array([0,-self.mass*g]) #liste force x et force y
         self.liens = {}  #entrée liens sortie l0
         if not(self.plateforme):
-            for g in Liste_goos:
-                l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
-                if l==0: Liste_goos.pop()
-                if  l <= 20 and not(g.plateforme):
-                    self.liens[g] = l
-                    g.liens[self] = l
-                if  l <= 10 and g.plateforme:
-                    self.liens[g] = l
-            if self.liens=={}: Liste_goos.pop()
+            for go in Liste_goos:
+                l = np.sqrt( (self.position[0]-go.position[0])**2 + (self.position[1]-go.position[1])**2 )
+                #if l==0: Liste_goos.pop()
+                if  l <= 0.20 and not(go.plateforme):
+                    self.liens[go] = l
+                    go.liens[self] = l
+                if  l <= 0.10 and go.plateforme:
+                    self.liens[go] = l
+            #if self.liens=={}: Liste_goos.pop()
     
     def update_forces(self):
-        g=9.81/20
         self.forces=np.array([0,-self.mass*g])
         for b in self.liens.keys():
             d_x=self.position[0]-b.position[0]
             d_y=self.position[1]-b.position[1]
             d=np.sqrt(d_x**2+d_y**2)
-            self.forces[0]+=-k*(d-self.liens[b])*d_x/d
-            self.forces[1]+=-k*(d-self.liens[b])*d_y/d
+            self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+0.01)
+            self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+0.01)
 
 
 def tdt(t):
     pos=[]
     global Liste_goos 
-    for goo in Liste_goos :
-        if goo.plateforme!=True:
-            goo.vitesse[0] = goo.vitesse[0] + dt*goo.forces[0]/goo.mass
-            goo.vitesse[1] = goo.vitesse[1] + dt*goo.forces[1]/goo.mass
-            goo.position[0] = goo.position[0] +dt*goo.vitesse[0]
-            goo.position[1] = goo.position[1] +dt*goo.vitesse[1]
-            goo.update_forces()
-        pos.append([goo.position[0],goo.position[1]])
+    for go in Liste_goos :
+        if go.plateforme!=True:
+            go.vitesse[0] = go.vitesse[0] + dt*go.forces[0]/go.mass
+            go.vitesse[1] = go.vitesse[1] + dt*go.forces[1]/go.mass
+            go.position[0] = go.position[0] +dt*go.vitesse[0]
+            go.position[1] = go.position[1] +dt*go.vitesse[1]
+            go.update_forces()
+        pos.append([go.position[0],go.position[1]])
     pos= np.array(pos)
     scat.set_offsets(pos)
-    return scat
+    return scat,
 
 """Initialisation des plateformes"""
 for i in range (20):
-    Liste_goos.append(goo(x_min + i,0,True))
-    Liste_goos.append(goo(x_max - i,0,True))
-Liste_goos.append(goo(x_min + 25,0,False))
-Liste_goos.append(goo(x_min + 40,0,False))
+    Liste_goos.append(goo(x_min + i*0.01,0,True))
+    Liste_goos.append(goo(x_max - i*0.01,0,True))
+Liste_goos.append(goo(x_min + 0.25,0,False))
+Liste_goos.append(goo(x_min + 0.40,0,False))
 
 fig, ax = plt.subplots()
 ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
@@ -81,5 +79,5 @@ for goo in Liste_goos:
     pos_x.append(goo.position[0])
     pos_y.append(goo.position[1])
 scat = ax.scatter(pos_x,pos_y,s=30)
-ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
+ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=100)
 plt.show()
