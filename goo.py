@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
+import matplotlib.animation as animation
 
 x_min = -10
 x_max = 10
@@ -8,7 +10,7 @@ y_max = 10
 N = 3
 speed_max = 1
 g=9.81/20
-L = []
+L = []  #vecteur de goos
 
 pl1 = np.array([x_min,1,x_min+3,-1])
 pl2 = np.array([x_max-2,3,x_max,-1])
@@ -51,4 +53,3 @@ def forces(a,vector_goos):
 
 L.append(goo(X[0],Y[0]))
 L.append(goo(X[1],Y[1]))
-
