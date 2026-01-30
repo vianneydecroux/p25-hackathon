@@ -19,3 +19,14 @@ speeds = np.concatenate((VX,VY)).reshape(2,N)
 
 dict = {0:[1,2],1:[0],2:[0]}
 
+class goo:
+    def __init__(self, x, y):
+        self.position = np.array([x,y])
+        self.mass = 0.4
+        self.rayon = 0.01
+        self.vitesse = np.array([0,0])
+        self.force = np.array([0,0])
+        self.liens = []
+    
+    def ajouter_force
+
