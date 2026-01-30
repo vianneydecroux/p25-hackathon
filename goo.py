@@ -1,12 +1,8 @@
-# +
-
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from matplotlib.backend_bases import MouseButton
 
-# %matplotlib ipympl
-
-# -
 éta=0.1
 x_min = -0.50
 x_max = 0.50
@@ -16,9 +12,9 @@ y_max = 0.50
 g=9.81/20
 k=100
 dt=0.01
-Liste_goos = []  #vecteur de goos
+liste_goos = []  #vecteur de goos
 
-class goo:
+class Goo:
     def __init__(self, x, y, pl):
         self.plateforme = pl               #true -> plateforme et pas goo
         self.position = np.array([x,y], dtype = float)
@@ -29,7 +25,7 @@ class goo:
         self.liens = {}  #entrée liens sortie l0
         self.Prob = False
         if not(self.plateforme):
-            for go in Liste_goos:
+            for go in liste_goos:
                 l = np.sqrt( (self.position[0]-go.position[0])**2 + (self.position[1]-go.position[1])**2 )
                 if l==0: self.Prob = True
                 if  l <= 0.20 and not(go.plateforme):
@@ -48,11 +44,20 @@ class goo:
             self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+0.01)
             self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+0.01)
 
+def on_click(event):
+    if event.button is MouseButton.LEFT:
+        print(1)
+        x,y=(event.xdata,event.ydata)
+        liste_goos.append(Goo(x,y,False))
+        if liste_goos[-1].Prob:
+            liste_goos.pop()
+
+
+
 def tdt(t):
     pos=[]
-    global Liste_goos 
-
-    for go in Liste_goos :
+    global liste_goos 
+    for go in liste_goos :
         if go.plateforme!=True:
             go.vitesse[0] = go.vitesse[0] + dt*(go.forces[0]-éta*go.vitesse[0])/go.mass
             go.vitesse[1] = go.vitesse[1] + dt*(go.forces[1]-éta*go.vitesse[1])/go.mass
@@ -67,31 +72,36 @@ def tdt(t):
 
     return scat, *[l[0] for l in lines]
 
+
+
 """Initialisation des plateformes"""
 for i in range (21):
-    Liste_goos.append(goo(x_min + i*0.01,0,True))
-    Liste_goos.append(goo(x_max - i*0.01,0,True))
-Liste_goos.append(goo(x_min + 0.25,0,False))
-if Liste_goos[-1].Prob:
-    Liste_goos.pop()
-Liste_goos.append(goo(x_min + 0.40,0,False))
-if Liste_goos[-1].Prob:
-    Liste_goos.pop()
+    liste_goos.append(Goo(x_min + i*0.01,0,True))
+    liste_goos.append(Goo(x_max - i*0.01,0,True))
+liste_goos.append(Goo(x_min + 0.3,0,False))
+if liste_goos[-1].Prob:
+    liste_goos.pop()
+liste_goos.append(Goo(x_min + 0.40,0,False))
+if liste_goos[-1].Prob:
+    liste_goos.pop()
 
 fig, ax = plt.subplots()
 ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
 pos_x=[]
 pos_y=[]
-for go in Liste_goos:
+for go in liste_goos:
     pos_x.append(go.position[0])
     pos_y.append(go.position[1])
 
 scat = ax.scatter(pos_x,pos_y,s=30)
 lines = []
-for go in Liste_goos :
+for go in liste_goos :
     for go2 in go.liens.keys():
         line, = ax.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
         lines.append((line, go, go2))
 
 ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=1)
+
+
+plt.connect('button_press_event', on_click)
 plt.show()
