@@ -7,7 +7,7 @@ import matplotlib.animation as animation
 # %matplotlib ipympl
 
 # -
-
+éta=0.1
 x_min = -0.50
 x_max = 0.50
 y_min = -0.50
@@ -45,8 +45,8 @@ class goo:
             d_x=self.position[0]-b.position[0]
             d_y=self.position[1]-b.position[1]
             d=np.sqrt(d_x**2+d_y**2)
-            self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+0.1)
-            self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+0.1)
+            self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+0.01)
+            self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+0.01)
 
 def tdt(t):
     pos=[]
@@ -54,8 +54,8 @@ def tdt(t):
 
     for go in Liste_goos :
         if go.plateforme!=True:
-            go.vitesse[0] = go.vitesse[0] + dt*go.forces[0]/go.mass
-            go.vitesse[1] = go.vitesse[1] + dt*go.forces[1]/go.mass
+            go.vitesse[0] = go.vitesse[0] + dt*(go.forces[0]-éta*go.vitesse[0])/go.mass
+            go.vitesse[1] = go.vitesse[1] + dt*(go.forces[1]-éta*go.vitesse[1])/go.mass
             go.position[0] = go.position[0] +dt*go.vitesse[0]
             go.position[1] = go.position[1] +dt*go.vitesse[1]
             go.update_forces()
