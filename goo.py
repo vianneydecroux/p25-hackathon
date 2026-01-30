@@ -3,16 +3,16 @@ import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt 
 import matplotlib.animation as animation
 
-x_min = -10
-x_max = 10
-y_min = -10
-y_max = 10
+x_min = -50
+x_max = 50
+y_min = -50
+y_max = 50
 N = 3
 speed_max = 1
 g=9.81/20
 k=100
 dt=10*-6
-vecteur_goos = []  #vecteur de goos
+Liste_goos = []  #vecteur de goos
 
 class goo:
     def __init__(self, x, y, pl):
@@ -38,6 +38,15 @@ class goo:
             self.force[0]+=-k(d-self.liens[b])*d_x/d
             self.force[1]+=-k(d-self.liens[b])*d_y/d
 
+        if not(pl):
+            for g in Liste_goos:
+                l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
+                if l==0: Liste_goos.pop(self)
+                if  l <= 20 and not(g.plateforme):
+                    self.liens[g] = l
+                if  l <= 10 and g.plateforme:
+                    self.liens[g] = l
+            if self.liens=={}: Liste_goos.pop(self)
 
     
 
@@ -53,11 +62,6 @@ VX = np.random.uniform(0,speed_max,N)
 VY = np.random.uniform(0,speed_max,N)
 
 
-L.append(goo(x_min,0,True))
-L.append(goo(x_max,0,True))
-L.append(goo(X[0],Y[0],False))
-L.append(goo(X[1],Y[1],False))
-
 
 
 fig, ax = plt.subplots()
@@ -67,8 +71,8 @@ scat = ax.scatter(position[:,0],position[:,1],s=masse/1000)
 
 def tdt(t):
     pos=[]
-    global vecteur_goos
-    for goo in vecteur_goos:
+    global Liste_goos 
+    for goo in Liste_goos :
         if goo.plateforme!=True:
             goo.vitesse[0] = goo.vitesse[0] + dt*goo.forces[0]
             goo.vitesse[1] = goo.vitesse[1] + dt*goo.forces[1]
@@ -80,3 +84,9 @@ def tdt(t):
     return scat
 ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
 plt.show()
+"""Initialisation des plateformes"""
+for i in range (20):
+    Liste_goos.append(goo(x_min + i*0.1,0,True))
+    Liste_goos.append(goo(x_max - i*0.1,0,True))
+Liste_goos.append(goo(X[0],Y[0],False))
+Liste_goos.append(goo(X[1],Y[1],False))
