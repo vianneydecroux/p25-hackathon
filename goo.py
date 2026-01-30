@@ -12,11 +12,9 @@ speed_max = 1
 g=9.81/20
 L = []  #vecteur de goos
 
-pl1 = np.array([x_min,1,x_min+3,-1])
-pl2 = np.array([x_max-2,3,x_max,-1])
-
 class goo:
-    def __init__(self, x, y):
+    def __init__(self, x, y, pl):
+        self.plateforme = pl               #true -> plateforme et pas goo
         self.position = np.array([x,y])
         self.mass = 0.4
         self.rayon = 0.01
@@ -25,7 +23,9 @@ class goo:
         self.liens = {}  #entrée liens sortie l0
         for g in L:
             l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
-            if  l <= 20:
+            if  l <= 20 and not(g.plateforme):
+                self.liens[g] = l
+            if  l <= 10 and g.plateforme:
                 self.liens[g] = l
         
 
@@ -51,5 +51,10 @@ def forces(a,vector_goos):
             a.force[0]+=-k(d-a.liens[b])*d_x/d
             a.force[1]+=-k(d-a.liens[b])*d_y/d-a.mass*g
 
-L.append(goo(X[0],Y[0]))
-L.append(goo(X[1],Y[1]))
+
+L.append(goo(x_min,0,True))
+L.append(goo(x_max,0,True))
+L.append(goo(X[0],Y[0],False))
+L.append(goo(X[1],Y[1],False))
+
+
