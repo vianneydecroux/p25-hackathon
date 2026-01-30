@@ -21,12 +21,13 @@ class goo:
         self.vitesse = np.array([0,0])
         self.force = np.array([0,0]) #liste force x et force y
         self.liens = {}  #entrée liens sortie l0
-        for g in L:
-            l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
-            if  l <= 20 and not(g.plateforme):
-                self.liens[g] = l
-            if  l <= 10 and g.plateforme:
-                self.liens[g] = l
+        if not(pl):
+            for g in L:
+                l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
+                if  l <= 20 and not(g.plateforme):
+                    self.liens[g] = l
+                if  l <= 10 and g.plateforme:
+                    self.liens[g] = l
         
 
     
@@ -52,8 +53,10 @@ def forces(a,vector_goos):
             a.force[1]+=-k(d-a.liens[b])*d_y/d-a.mass*g
 
 
-L.append(goo(x_min,0,True))
-L.append(goo(x_max,0,True))
+
+
+for i in range (20):
+    L.append(goo(x_min + i*0.1,0,True))
+    L.append(goo(x_max - i*0.1,0,True))
 L.append(goo(X[0],Y[0],False))
 L.append(goo(X[1],Y[1],False))
-
