@@ -17,6 +17,28 @@ VY = np.random.uniform(0,speed_max,N)
 positions = np.concatenate((X,Y)).reshape(2,N)
 speeds = np.concatenate((VX,VY)).reshape(2,N)
 
+dict = {0:[(1,3),(2,3)],1:[(0,3)],2:[(0,3)]}
+
+
+def forces(position,dict):
+
+
+
+
+
+
+class goo:
+    def __init__(self, x, y):
+        self.position = np.array([x,y])
+        self.mass = 0.4
+        self.rayon = 0.01
+        self.vitesse = np.array([0,0])
+        self.force = np.array([0,])
+        self.liens = dict{}
+            
+
+    def ajouter_force()
+
 def forces(a,vector_goos):
     for b in vector_goos:
         if b in a.liens.key:
@@ -40,4 +62,3 @@ def forces(a , b):
 
 pl1 = np.array([x_min,1,x_min+3,-1])
 pl2 = np.array([x_max-2,3,x_max,-1])
-
