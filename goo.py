@@ -10,7 +10,8 @@ y_max = 10
 N = 3
 speed_max = 1
 g=9.81/20
-L = []  #vecteur de goos
+Liste_goos = []  #vecteur de goos
+k=100
 
 class goo:
     def __init__(self, x, y, pl):
@@ -22,13 +23,14 @@ class goo:
         self.force = np.array([0,0]) #liste force x et force y
         self.liens = {}  #entrée liens sortie l0
         if not(pl):
-            for g in L:
+            for g in Liste_goos:
                 l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
+                if l==0: Liste_goos.pop(self)
                 if  l <= 20 and not(g.plateforme):
                     self.liens[g] = l
                 if  l <= 10 and g.plateforme:
                     self.liens[g] = l
-        
+            if self.liens=={}: Liste_goos.pop(self)
 
     
 
@@ -56,9 +58,7 @@ def forces(a,vector_goos):
 
 """Initialisation des plateformes"""
 for i in range (20):
-    L.append(goo(x_min + i*0.1,0,True))
-    L.append(goo(x_max - i*0.1,0,True))
-
-"""2 goos pour le travail"""
-L.append(goo(X[0],Y[0],False))
-L.append(goo(X[1],Y[1],False))
+    Liste_goos.append(goo(x_min + i*0.1,0,True))
+    Liste_goos.append(goo(x_max - i*0.1,0,True))
+Liste_goos.append(goo(X[0],Y[0],False))
+Liste_goos.append(goo(X[1],Y[1],False))
