@@ -25,9 +25,9 @@ class goo:
         self.liens = {}  #entrée liens sortie l0
         for go in Liste_goos:
             l = np.sqrt( (self.position[0]-go.position[0])**2 + (self.position[1]-go.position[1])**2 )
-            if  l <= 20 and not(g.plateforme):
+            if  l <= 20 and not(go.plateforme):
                 self.liens[go] = l
-            if  l <= 10 and g.plateforme:
+            if  l <= 10 and go.plateforme:
                 self.liens[go] = l
     
     def update_forces(self):
