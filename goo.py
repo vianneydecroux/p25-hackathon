@@ -63,10 +63,7 @@ def tdt(t):
     pos= np.array(pos)
     scat.set_offsets(pos)
     for line, go, go2 in lines:
-        line.set_data(
-            [go.position[0], go2.position[0]],
-            [go.position[1], go2.position[1]]
-        )
+        line.set_data([go.position[0], go2.position[0]], [go.position[1], go2.position[1]])
 
     return scat, *[l[0] for l in lines]
 
@@ -74,7 +71,7 @@ def tdt(t):
 for i in range (21):
     Liste_goos.append(goo(x_min + i*0.01,0,True))
     Liste_goos.append(goo(x_max - i*0.01,0,True))
-Liste_goos.append(goo(x_min + 0.3,0,False))
+Liste_goos.append(goo(x_min + 0.25,0,False))
 if Liste_goos[-1].Prob:
     Liste_goos.pop()
 Liste_goos.append(goo(x_min + 0.40,0,False))
