@@ -87,5 +87,5 @@ for goo in Liste_goos:
     pos_x.append(goo.position[0])
     pos_y.append(goo.position[1])
 scat = ax.scatter(pos_x,pos_y,s=30)
-ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=100)
+ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=1)
 plt.show()
