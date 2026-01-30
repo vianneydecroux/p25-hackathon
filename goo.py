@@ -47,6 +47,14 @@ class goo:
             self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+0.01)
             self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+0.01)
 
+fig, ax = plt.subplots()
+ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
+pos_x=[]
+pos_y=[]
+for goo in Liste_goos:
+    pos_x.append(goo.position[0])
+    pos_y.append(goo.position[1])
+scat = ax.scatter(pos_x,pos_y,s=30)
 
 def tdt(t):
     pos=[]
