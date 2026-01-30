@@ -62,7 +62,6 @@ def tdt(t):
     pos=np.array(pos)
     scat.set_offsets(pos)
     return scat
-ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
 
 """Initialisation des plateformes"""
 for i in range (20):
