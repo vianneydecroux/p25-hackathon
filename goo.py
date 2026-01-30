@@ -17,5 +17,12 @@ VY = np.random.uniform(0,speed_max,N)
 positions = np.concatenate((X,Y)).reshape(2,N)
 speeds = np.concatenate((VX,VY)).reshape(2,N)
 
-dict = {0:[1,2],1:[0],2:[0]}
+dict = {0:[(1,3),(2,3)],1:[(0,3)],2:[(0,3)]}
+
+def forces(position,dict):
+
+
+
+
+
 
