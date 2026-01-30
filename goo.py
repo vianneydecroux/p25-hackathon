@@ -15,12 +15,11 @@ y_max = 0.50
 
 g=9.81/20
 k=100
-dt=0.1
+dt=0.01
 Liste_goos = []  #vecteur de goos
 
 class goo:
     def __init__(self, x, y, pl):
-        g=9.81/20
         self.plateforme = pl               #true -> plateforme et pas goo
         self.position = np.array([x,y], dtype = float)
         self.mass = 0.4
@@ -65,10 +64,10 @@ def tdt(t):
     return scat,
 
 """Initialisation des plateformes"""
-for i in range (20):
+for i in range (21):
     Liste_goos.append(goo(x_min + i*0.01,0,True))
     Liste_goos.append(goo(x_max - i*0.01,0,True))
-Liste_goos.append(goo(x_min + 0.25,0,False))
+Liste_goos.append(goo(x_min + 0.3,0,False))
 Liste_goos.append(goo(x_min + 0.40,0,False))
 
 fig, ax = plt.subplots()
@@ -79,5 +78,5 @@ for goo in Liste_goos:
     pos_x.append(goo.position[0])
     pos_y.append(goo.position[1])
 scat = ax.scatter(pos_x,pos_y,s=30)
-ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=100)
+ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=1)
 plt.show()
