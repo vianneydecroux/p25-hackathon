@@ -35,15 +35,14 @@ class goo:
             if self.liens=={}: Liste_goos.pop()
     
     def update_forces(self):
-        eps=0.1
         g=9.81/20
         self.forces=np.array([0,-self.mass*g])
         for b in self.liens.keys():
             d_x=self.position[0]-b.position[0]
             d_y=self.position[1]-b.position[1]
             d=np.sqrt(d_x**2+d_y**2)
-            self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+eps)
-            self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+eps)
+            self.forces[0]+=-k*(d-self.liens[b])*d_x/d
+            self.forces[1]+=-k*(d-self.liens[b])*d_y/d
 
 
 def tdt(t):
@@ -76,5 +75,5 @@ for goo in Liste_goos:
     pos_x.append(goo.position[0])
     pos_y.append(goo.position[1])
 scat = ax.scatter(pos_x,pos_y,s=30)
-ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
+ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10, interval=100)
 plt.show()
