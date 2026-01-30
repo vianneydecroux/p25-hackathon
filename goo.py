@@ -3,14 +3,15 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.backend_bases import MouseButton
 
-éta=0.1
+éta=10
 x_min = -0.50
 x_max = 0.50
 y_min = -0.50
 y_max = 0.50
 
-g=9.81/20
+g=9.81/10
 k=100
+l0=0.5
 dt=0.01
 liste_goos = []  #vecteur de goos
 
@@ -22,7 +23,7 @@ class Goo:
         self.rayon = 0.01
         self.vitesse = np.array([0,0], dtype = float)
         self.forces = np.array([0,-self.mass*g], dtype = float) #liste force x et force y
-        self.liens = {}  #entrée liens sortie l0
+        self.liens = {}
         self.Prob = False
         if not(self.plateforme):
             for go in liste_goos:
