@@ -29,6 +29,7 @@ class goo:
                 if l==0: Liste_goos.pop()
                 if  l <= 20 and not(g.plateforme):
                     self.liens[g] = l
+                    g.liens[self] = l
                 if  l <= 10 and g.plateforme:
                     self.liens[g] = l
             if self.liens=={}: Liste_goos.pop()
