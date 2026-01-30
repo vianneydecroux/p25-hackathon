@@ -75,12 +75,11 @@ def tdt(t):
     pos=np.array(pos)
     scat.set_offsets(pos)
     return scat
-ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
 
 """Initialisation des plateformes"""
 for i in range (20):
-    Liste_goos.append(goo(x_min + i*0.1,0,True))
-    Liste_goos.append(goo(x_max - i*0.1,0,True))
+    Liste_goos.append(goo(x_min + i,0,True))
+    Liste_goos.append(goo(x_max - i,0,True))
 Liste_goos.append(goo(x_min + 25,0,False))
 Liste_goos.append(goo(x_min + 40,0,False))
 
