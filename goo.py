@@ -48,6 +48,7 @@ class goo:
                     self.liens[g] = l
             if self.liens=={}: Liste_goos.pop(self)
 
+<<<<<<< HEAD
     
 
 fig, ax = plt.subplots()
@@ -58,6 +59,8 @@ for goo in Liste_goos:
 pos=np.array(pos)
 scat = ax.scatter(pos[:,0],pos[:,1],s=1)
 
+=======
+>>>>>>> 3f9399e1365b8dafe9757cde28cb493210e32bca
 def tdt(t):
     pos=[]
     global Liste_goos 
@@ -81,4 +84,16 @@ for i in range (20):
 Liste_goos.append(goo(x_min + 25,0,False))
 Liste_goos.append(goo(x_min + 40,0,False))
 
+<<<<<<< HEAD
+=======
+fig, ax = plt.subplots()
+ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
+pos_x=[]
+pos_y=[]
+for goo in Liste_goos:
+    pos_x.append(goo.position[0])
+    pos_y.append(goo.position[1])
+scat = ax.scatter(pos_x,pos_y,s=30)
+ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
+>>>>>>> 3f9399e1365b8dafe9757cde28cb493210e32bca
 plt.show()
