@@ -31,16 +31,18 @@ class goo:
                 self.liens[g] = l
     
     def update_forces(self):
+        g=9.81/20
+        self.forcces=np.array([0,-self.mass*g])
         for b in self.liens.keys():
             d_x=self.position[0]-b.position[0]
             d_y=self.position[1]-b.position[1]
             d=np.sqrt(d_x**2+d_y**2)
-            self.forces[0]+=-k(d-self.liens[b])*d_x/d
-            self.forces[1]+=-k(d-self.liens[b])*d_y/d
+            self.forces[0]+=-k*(d-self.liens[b])*d_x/d
+            self.forces[1]+=-k*(d-self.liens[b])*d_y/d
 
         if not(self.plateforme):
-            for g in Liste_goos:
-                l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
+            for go in Liste_goos:
+                l = np.sqrt( (self.position[0]-go.position[0])**2 + (self.position[1]-g.position[1])**2 )
                 if l==0: Liste_goos.pop(self)
                 if  l <= 20 and not(g.plateforme):
                     self.liens[g] = l
