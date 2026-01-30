@@ -22,11 +22,11 @@ class goo:
     def __init__(self, x, y, pl):
         g=9.81/20
         self.plateforme = pl               #true -> plateforme et pas goo
-        self.position = np.array([x,y])
+        self.position = np.array([x,y], dtype = float)
         self.mass = 0.4
         self.rayon = 0.01
-        self.vitesse = np.array([0,0])
-        self.forces = np.array([0,-self.mass*g]) #liste force x et force y
+        self.vitesse = np.array([0,0], dtype = float)
+        self.forces = np.array([0,-self.mass*g], dtype = float) #liste force x et force y
         self.liens = {}  #entrée liens sortie l0
         if not(self.plateforme):
             for go in Liste_goos:
