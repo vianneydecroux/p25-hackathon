@@ -69,6 +69,7 @@ ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
 pos=[]
 for goo in Liste_goos:
     pos.append([goo.position[0],goo.position[1]])
+pos=np.array(pos)
 scat = ax.scatter(pos[:,0],pos[:,1],s=1)
 
 
@@ -83,6 +84,7 @@ def tdt(t):
             goo.position[1] = goo.position[1] +dt*goo.vitesse[1]
             goo.update_forces()
             pos.append([goo.position[0],goo.position[1]])
+    pos=np.array(pos)
     scat.set_offsets(pos)
     return scat
 ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
