@@ -23,12 +23,12 @@ class goo:
         self.vitesse = np.array([0,0])
         self.forces = np.array([0,-self.mass*g]) #liste force x et force y
         self.liens = {}  #entrée liens sortie l0
-        for g in Liste_goos:
-            l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
+        for go in Liste_goos:
+            l = np.sqrt( (self.position[0]-go.position[0])**2 + (self.position[1]-go.position[1])**2 )
             if  l <= 20 and not(g.plateforme):
-                self.liens[g] = l
+                self.liens[go] = l
             if  l <= 10 and g.plateforme:
-                self.liens[g] = l
+                self.liens[go] = l
     
     def update_forces(self):
         for b in self.liens.keys():
