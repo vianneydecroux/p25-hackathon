@@ -7,15 +7,15 @@ x_min = -50
 x_max = 50
 y_min = -50
 y_max = 50
-N = 3
-speed_max = 1
+
 g=9.81/20
 k=100
-dt=10*-6
+dt=1
 Liste_goos = []  #vecteur de goos
 
 class goo:
     def __init__(self, x, y, pl):
+        g=9.81/20
         self.plateforme = pl               #true -> plateforme et pas goo
         self.position = np.array([x,y])
         self.mass = 0.4
@@ -50,19 +50,6 @@ class goo:
 
     
 
-"""Pour travailler directement sur les forces"""
-N = 3
-x_min, x_max = -10., 10.
-y_min, y_max = -10., 10.
-speed_max = 1
-
-X = np.random.uniform(x_min,x_max,N)
-Y = np.random.uniform(y_min,y_max,N)
-VX = np.random.uniform(0,speed_max,N)
-VY = np.random.uniform(0,speed_max,N)
-
-
-
 
 fig, ax = plt.subplots()
 ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
@@ -72,9 +59,9 @@ for goo in Liste_goos:
 pos=np.array(pos)
 scat = ax.scatter(pos[:,0],pos[:,1],s=1)
 
-
 def tdt(t):
-    pos=[]
+    pos_x=[]
+    pos_y=[]
     global Liste_goos 
     for goo in Liste_goos :
         if goo.plateforme!=True:
@@ -83,16 +70,27 @@ def tdt(t):
             goo.position[0] = goo.position[0] +dt*goo.vitesse[0]
             goo.position[1] = goo.position[1] +dt*goo.vitesse[1]
             goo.update_forces()
-            pos.append([goo.position[0],goo.position[1]])
-    pos=np.array(pos)
-    scat.set_offsets(pos)
+            pos_x.append(goo.position[0])
+            pos_y.append(goo.position[1])
+    scat.set_offsets(np.transpose([pos_x,pos_y]))
     return scat
-ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
-plt.show()
+
 
 """Initialisation des plateformes"""
-for i in range (20):
-    Liste_goos.append(goo(x_min + i*0.1,0,True))
-    Liste_goos.append(goo(x_max - i*0.1,0,True))
+for i in range (0,20,1):
+    Liste_goos.append(goo(x_min + i,0,True))
+    Liste_goos.append(goo(x_max - i,0,True))
 Liste_goos.append(goo(x_min + 25,0,False))
-Liste_goos.append(goo(x_min + 40,0,False))
+<<<<<<< HEAD
+Liste_goos.append(goo(x_min + 30,0,False))
+
+fig, ax = plt.subplots()
+ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
+pos_x=[]
+pos_y=[]
+for goo in Liste_goos:
+    pos_x.append(goo.position[0])
+    pos_y.append(goo.position[1])
+scat = ax.scatter(pos_x,pos_y,s=30)
+ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
+plt.show()
