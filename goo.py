@@ -32,11 +32,11 @@ class goo:
     
     def update_forces(self):
         for b in self.liens.keys:
-            d=np.sqrt(d_x**2+d_y**2)
             d_x=self.position[0]-b.position[0]
+            d=np.sqrt(d_x**2+d_y**2)
             d_y=self.position[1]-b.position[1]
-            self.force[0]+=-k(d-self.liens[b])*d_x/d
-            self.force[1]+=-k(d-self.liens[b])*d_y/d
+            self.forces[0]+=-k(d-self.liens[b])*d_x/d
+            self.forces[1]+=-k(d-self.liens[b])*d_y/d
 
         if not(self.plateforme):
             for g in Liste_goos:
@@ -49,16 +49,6 @@ class goo:
             if self.liens=={}: Liste_goos.pop(self)
 
     
-
-
-fig, ax = plt.subplots()
-ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
-pos=[]
-for goo in Liste_goos:
-    pos.append([goo.position[0],goo.position[1]])
-pos=np.array(pos)
-scat = ax.scatter(pos[:,0],pos[:,1],s=1)
-
 def tdt(t):
     pos_x=[]
     pos_y=[]
@@ -81,7 +71,6 @@ for i in range (0,20,1):
     Liste_goos.append(goo(x_min + i,0,True))
     Liste_goos.append(goo(x_max - i,0,True))
 Liste_goos.append(goo(x_min + 25,0,False))
-<<<<<<< HEAD
 Liste_goos.append(goo(x_min + 30,0,False))
 
 fig, ax = plt.subplots()
@@ -92,5 +81,5 @@ for goo in Liste_goos:
     pos_x.append(goo.position[0])
     pos_y.append(goo.position[1])
 scat = ax.scatter(pos_x,pos_y,s=30)
-ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
+ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100,cache_frame_data=False)
 plt.show()
