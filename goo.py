@@ -31,12 +31,12 @@ class goo:
                 self.liens[g] = l
     
     def update_forces(self):
-        for b in self.liens.keys:
-            d=np.sqrt(d_x**2+d_y**2)
+        for b in self.liens.keys():
             d_x=self.position[0]-b.position[0]
             d_y=self.position[1]-b.position[1]
-            self.force[0]+=-k(d-self.liens[b])*d_x/d
-            self.force[1]+=-k(d-self.liens[b])*d_y/d
+            d=np.sqrt(d_x**2+d_y**2)
+            self.forces[0]+=-k(d-self.liens[b])*d_x/d
+            self.forces[1]+=-k(d-self.liens[b])*d_y/d
 
         if not(self.plateforme):
             for g in Liste_goos:
@@ -50,23 +50,6 @@ class goo:
 
     
 
-"""Pour travailler directement sur les forces"""
-N = 3
-x_min, x_max = -10., 10.
-y_min, y_max = -10., 10.
-speed_max = 1
-
-for i in range (20):
-    Liste_goos.append(goo(x_min + i*0.1,0,True))
-    Liste_goos.append(goo(x_max - i*0.1,0,True))
-Liste_goos.append(goo(x_min + 25,0,False))
-Liste_goos.append(goo(x_min + 40,0,False))
-
-X = np.random.uniform(x_min,x_max,N)
-Y = np.random.uniform(y_min,y_max,N)
-VX = np.random.uniform(0,speed_max,N)
-VY = np.random.uniform(0,speed_max,N)
-
 fig, ax = plt.subplots()
 ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
 pos=[]
@@ -74,7 +57,6 @@ for goo in Liste_goos:
     pos.append([goo.position[0],goo.position[1]])
 pos=np.array(pos)
 scat = ax.scatter(pos[:,0],pos[:,1],s=1)
-
 
 def tdt(t):
     pos=[]
@@ -91,7 +73,6 @@ def tdt(t):
     scat.set_offsets(pos)
     return scat
 ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
-plt.show()
 
 """Initialisation des plateformes"""
 for i in range (20):
@@ -99,4 +80,5 @@ for i in range (20):
     Liste_goos.append(goo(x_max - i*0.1,0,True))
 Liste_goos.append(goo(x_min + 25,0,False))
 Liste_goos.append(goo(x_min + 40,0,False))
->>>>>>> b2ef091dbb66718d12efac9d9718ab615557b5d8
+
+plt.show()
