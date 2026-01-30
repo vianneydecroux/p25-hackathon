@@ -3,16 +3,9 @@ import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt 
 import matplotlib.animation as animation
 
-x_min = -50
-x_max = 50
-y_min = -50
-y_max = 50
-N = 3
-speed_max = 1
 g=9.81/20
 k=100
 dt=10*-6
-Liste_goos = []  #vecteur de goos
 
 class goo:
     def __init__(self, x, y, pl):
@@ -48,102 +41,51 @@ class goo:
                     self.liens[g] = l
             if self.liens=={}: Liste_goos.pop(self)
 
-    
+x_min = -50
+x_max = 50
+y_min = -50
+y_max = 50
+N = 3
+speed_max = 1
 
-"""Pour travailler directement sur les forces"""
+Liste_goos = []  #vecteur de goos
+
+def tdt(t):
+    pos = []
+    for goo in Liste_goos:
+        if not goo.plateforme:
+            goo.vitesse[0] += dt * goo.forces[0]
+            goo.vitesse[1] += dt * goo.forces[1]
+            goo.position[0] += dt * goo.vitesse[0]
+            goo.position[1] += dt * goo.vitesse[1]
+            goo.update_forces()
+        pos.append([goo.position[0], goo.position[1]])
+
+    scat.set_offsets(np.array(pos))
+    return scat
+
+
 N = 3
 x_min, x_max = -10., 10.
 y_min, y_max = -10., 10.
 speed_max = 1
+
+for i in range (20):
+    Liste_goos.append(goo(x_min + i*0.1,0,True))
+    Liste_goos.append(goo(x_max - i*0.1,0,True))
+Liste_goos.append(goo(x_min + 25,0,False))
+Liste_goos.append(goo(x_min + 40,0,False))
 
 X = np.random.uniform(x_min,x_max,N)
 Y = np.random.uniform(y_min,y_max,N)
 VX = np.random.uniform(0,speed_max,N)
 VY = np.random.uniform(0,speed_max,N)
 
-<<<<<<< HEAD
-dict = {0:[(1,3),(2,3)],1:[(0,3)],2:[(0,3)]}
-
-
-def forces(position,dict):
-
-
-
-
-
-
-class goo:
-    def __init__(self, x, y):
-        self.position = np.array([x,y])
-        self.mass = 0.4
-        self.rayon = 0.01
-        self.vitesse = np.array([0,0])
-        self.force = np.array([0,])
-        self.liens = dict{}
-            
-
-    def ajouter_force()
-
-def forces(a,vector_goos):
-    for b in vector_goos:
-        if b in a.liens.key:
-            d=np.sqrt(d_x**2+d_y**2)
-            d_x=a.position[0]-b.position[0]
-            d_y=a.position[1]-b.position[1]
-            a.force[0]+=-k(d-a.liens[b])*d_x/d
-            a.force[1]+=-k(d-a.liens[b])*d_y/d-a.mass*g
-=======
->>>>>>> b2ef091dbb66718d12efac9d9718ab615557b5d8
-
-
-
-<<<<<<< HEAD
-a = goo(X[0],Y[0])
-L.append(a)
-L.append(b)
-b = goo(X[1],Y[1])
-
-
-def forces(a , b):
-    if b in a.liens.key:
-        d_x=a.position[0]-b.position[0]
-        d_y=a.position[1]-b.position[1]
-        a.force[0]=-k(dx-a.liens[b])
-        a.force[1]=-k(dy-a.liens[b])-a.mass*g
-
-pl1 = np.array([x_min,1,x_min+3,-1])
-pl2 = np.array([x_max-2,3,x_max,-1])
-=======
 fig, ax = plt.subplots()
-ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
-pos=[]
-for goo in Liste_goos:
-    pos.append([goo.position[0],goo.position[1]])
-pos=np.array(pos)
-scat = ax.scatter(pos[:,0],pos[:,1],s=1)
+ax.set(xlim=[x_min, x_max], ylim=[y_min, y_max])
 
+pos = np.array([[goo.position[0], goo.position[1]] for goo in Liste_goos])
+scat = ax.scatter(pos[:,0], pos[:,1], s=1)
 
-def tdt(t):
-    pos=[]
-    global Liste_goos 
-    for goo in Liste_goos :
-        if goo.plateforme!=True:
-            goo.vitesse[0] = goo.vitesse[0] + dt*goo.forces[0]
-            goo.vitesse[1] = goo.vitesse[1] + dt*goo.forces[1]
-            goo.position[0] = goo.position[0] +dt*goo.vitesse[0]
-            goo.position[1] = goo.position[1] +dt*goo.vitesse[1]
-            goo.update_forces()
-            pos.append([goo.position[0],goo.position[1]])
-    pos=np.array(pos)
-    scat.set_offsets(pos)
-    return scat
-ani = animation.FuncAnimation(fig = fig, func=tdt, interval=100)
+ani = animation.FuncAnimation(fig, tdt, frames=200, interval=100)
 plt.show()
-
-"""Initialisation des plateformes"""
-for i in range (20):
-    Liste_goos.append(goo(x_min + i*0.1,0,True))
-    Liste_goos.append(goo(x_max - i*0.1,0,True))
-Liste_goos.append(goo(x_min + 25,0,False))
-Liste_goos.append(goo(x_min + 40,0,False))
->>>>>>> b2ef091dbb66718d12efac9d9718ab615557b5d8
