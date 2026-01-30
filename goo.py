@@ -49,7 +49,7 @@ class Goo:
             d_x=self.position[0]-b.position[0]
             d_y=self.position[1]-b.position[1]
             d=np.sqrt(d_x**2+d_y**2)
-            if d > self.liens[b] + 0.05:
+            if d > self.liens[b] + 0.02:
                 casse.append(b)
             else:
                 self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+0.01)
