@@ -43,12 +43,25 @@ class Goo:
     
     def update_forces(self):
         self.forces=np.array([0,-self.mass*g])
+        casse = []
         for b in self.liens.keys():
             d_x=self.position[0]-b.position[0]
             d_y=self.position[1]-b.position[1]
             d=np.sqrt(d_x**2+d_y**2)
-            self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+0.01)
-            self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+0.01)
+            if d > self.liens[b] + 0.05:
+                casse.append(b)
+            else:
+                self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+0.01)
+                self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+0.01)
+        for b in casse:
+            if (self, b) in lines:
+                lines[(self, b)].remove()
+                del lines[(self, b)]
+            if (b, self) in lines:
+                lines[(b, self)].remove()
+                del lines[(b, self)]
+            self.liens.pop(b)
+            b.liens.pop(self, None)
 
 def on_click(event):
     if event.button is MouseButton.LEFT:
@@ -61,7 +74,7 @@ def on_click(event):
             go = liste_goos[-1]
             for go2 in go.liens.keys():
                 line, = ax.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
-                lines.append((line, go, go2))
+                lines[(go,go2)] = line
         
 
 
@@ -79,7 +92,7 @@ def tdt(t):
         pos.append([go.position[0],go.position[1]])
     pos= np.array(pos)
     scat.set_offsets(pos)
-    for line, go, go2 in lines:
+    for (go, go2), line in lines.items():
         line.set_data([go.position[0], go2.position[0]], [go.position[1], go2.position[1]])
 
     return scat, *[l[0] for l in lines]
@@ -100,11 +113,11 @@ for go in liste_goos:
     pos_y.append(go.position[1])
 
 scat = ax.scatter(pos_x,pos_y,s=30)
-lines = []
+lines = {}
 for go in liste_goos :
     for go2 in go.liens.keys():
         line, = ax.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
-        lines.append((line, go, go2))
+        lines[(go,go2)] = line
 
 ani = animation.FuncAnimation(fig = fig, func=tdt, frames = 10000, interval=1)
 
