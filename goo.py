@@ -41,15 +41,6 @@ class goo:
             self.forces[0]+=-k*(d-self.liens[b])*d_x/(d+eps)
             self.forces[1]+=-k*(d-self.liens[b])*d_y/(d+eps)
 
-        if not(self.plateforme):
-            for g in Liste_goos:
-                l = np.sqrt( (self.position[0]-g.position[0])**2 + (self.position[1]-g.position[1])**2 )
-                if l==0: Liste_goos.pop()
-                if  l <= 0.2 and not(g.plateforme):
-                    self.liens[g] = l
-                if  l <= 0.1 and g.plateforme:
-                    self.liens[g] = l
-            if self.liens=={}: Liste_goos.pop()
 
 def tdt(t):
     pos=[]
