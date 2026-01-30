@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.backend_bases import MouseButton
 
-éta=10
+éta=1
 x_min = -0.50
 x_max = 0.50
 y_min = -0.50
@@ -26,6 +26,8 @@ class Goo:
         self.liens = {}
         self.Prob = False
         if not(self.plateforme):
+            liste_plateforme = []
+            liste_distance = []
             for go in liste_goos:
                 l = np.sqrt( (self.position[0]-go.position[0])**2 + (self.position[1]-go.position[1])**2 )
                 if l==0: self.Prob = True
@@ -33,7 +35,11 @@ class Goo:
                     self.liens[go] = l
                     go.liens[self] = l
                 if  l<= 0.10 and go.plateforme:
-                    self.liens[go] = l
+                    liste_plateforme.append(go)
+                    liste_distance.append(l)
+            if len(liste_distance) > 0:
+                i = liste_distance.index(min(liste_distance))
+                self.liens[liste_plateforme[i]] = liste_distance[i]
             if self.liens=={}: self.Prob = True
     
     def update_forces(self):
@@ -82,15 +88,9 @@ def tdt(t):
 
 
 """Initialisation des plateformes"""
-for i in range (21):
-    liste_goos.append(Goo(x_min + i*0.01,0,True))
-    liste_goos.append(Goo(x_max - i*0.01,0,True))
-liste_goos.append(Goo(x_min + 0.3,0,False))
-if liste_goos[-1].Prob:
-    liste_goos.pop()
-liste_goos.append(Goo(x_min + 0.40,0,False))
-if liste_goos[-1].Prob:
-    liste_goos.pop()
+for i in range (100):
+    liste_goos.append(Goo(x_min + i*0.001,0,True))
+    liste_goos.append(Goo(x_max - i*0.001,0,True))
 
 fig, ax = plt.subplots()
 ax.set(xlim=[x_min,x_max],ylim=[y_min,y_max])
