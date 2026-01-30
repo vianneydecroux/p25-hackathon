@@ -54,9 +54,11 @@ def forces(a,vector_goos):
 
 
 
-
+"""Initialisation des plateformes"""
 for i in range (20):
     L.append(goo(x_min + i*0.1,0,True))
     L.append(goo(x_max - i*0.1,0,True))
+
+"""2 goos pour le travail"""
 L.append(goo(X[0],Y[0],False))
 L.append(goo(X[1],Y[1],False))
