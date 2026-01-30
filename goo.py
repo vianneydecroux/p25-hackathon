@@ -25,6 +25,8 @@ class Goo:
         self.liens = {}  #entrée liens sortie l0
         self.Prob = False
         if not(self.plateforme):
+            liste_plateforme = []
+            liste_distance = []
             for go in liste_goos:
                 l = np.sqrt( (self.position[0]-go.position[0])**2 + (self.position[1]-go.position[1])**2 )
                 if l==0: self.Prob = True
@@ -32,7 +34,11 @@ class Goo:
                     self.liens[go] = l
                     go.liens[self] = l
                 if  l<= 0.10 and go.plateforme:
-                    self.liens[go] = l
+                    liste_plateforme.append(go)
+                    liste_distance.append(l)
+            if len(liste_distance) > 0:
+                i = liste_distance.index(min(liste_distance))
+                self.liens[liste_plateforme[i]] = liste_distance[i]
             if self.liens=={}: self.Prob = True
     
     def update_forces(self):
