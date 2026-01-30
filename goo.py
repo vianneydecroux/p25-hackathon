@@ -51,6 +51,12 @@ def on_click(event):
         liste_goos.append(Goo(x,y,False))
         if liste_goos[-1].Prob:
             liste_goos.pop()
+        else:
+            go = liste_goos[-1]
+            for go2 in go.liens.keys():
+                line, = ax.plot([go.position[0], go2.position[0]], [go.position[1], go2.position[1]], c= 'b')
+                lines.append((line, go, go2))
+        
 
 
 
